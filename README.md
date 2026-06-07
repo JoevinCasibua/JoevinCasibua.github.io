@@ -1,3 +1,3 @@
 # WELCOME TO MY PORTFOLIO! 
 
-JoevinCasibua.github.io
+Paste this to your SearchBar: JoevinCasibua.github.io
