@@ -1,1 +1,3 @@
-# JoevinCasibua.github.io
+# WELCOME TO MY PORTFOLIO! 
+
+# PASTE THIS TO YOUR SEARCH BAR TO SEE MY PORTFOLIO: JoevinCasibua.github.io
