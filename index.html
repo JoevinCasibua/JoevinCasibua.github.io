@@ -2,1094 +2,1186 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Joevin Russel • Player Portfolio</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Joevin — Winter is Coming</title>
+  <link rel="icon" type="image/jpg" href="sigil.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+    rel="stylesheet">
   <style>
+    /* Vibrant Stark Theme Palette (Dark with White & Blue) */
     :root {
-      --bg: #0a0e1a;
-      --bg2: #11162b;
-      --panel: #161d3a;
-      --panel-line: #2a3566;
-      --neon: #5ff2c8;
-      --pink: #ff4fa3;
-      --gold: #ffd34e;
-      --purple: #9b6bff;
-      --blue: #4ea8ff;
-      --text: #d7e0ff;
-      --muted: #7c89b8;
-      --pixel: 'Press Start 2P', 'Courier New', monospace;
-      --body: 'VT323', 'Courier New', monospace;
+      --night: #060b14;
+      /* Deep midnight blue */
+      --stone: #0f172a;
+      /* Rich dark slate */
+      --stone-2: #1e293b;
+      /* Bright slate */
+      --parchment: #ffffff;
+      /* Pure white text */
+      --faded: #cbd5e1;
+      /* Crisp light gray */
+      --gold: #38bdf8;
+      /* Vibrant Ice */
+      --gold-bright: #7dd3fc;
+      /* Brighter Ice */
+      --ember: #0284c7;
+      /* Deep ice blue */
+      --ember-bright: #0ea5e9;
+      /* Vibrant sky blue */
+      --ice: #38bdf8;
+      /* Core vibrant blue */
+      --line: rgba(56, 189, 248, 0.4);
+      /* Vibrant silver-blue line */
     }
 
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box
     }
 
     html {
-      scroll-behavior: smooth;
+      scroll-behavior: smooth
     }
 
     body {
-      background:
-        radial-gradient(1200px 600px at 80% -10%, rgba(155, 107, 255, .18), transparent 60%),
-        radial-gradient(1000px 500px at 0% 100%, rgba(95, 242, 200, .12), transparent 55%),
-        var(--bg);
-      color: var(--text);
-      font-family: var(--body);
+      background: var(--night);
+      color: var(--parchment);
+      font-family: 'Cormorant Garamond', Georgia, serif;
       font-size: 22px;
-      line-height: 1.35;
+      /* Increased font size for better readability */
+      line-height: 1.65;
       overflow-x: hidden;
-      image-rendering: pixelated;
     }
 
-    /* scanline overlay */
-    body::before {
+    ::selection {
+      background: var(--gold-bright);
+      color: var(--night)
+    }
+
+    /* ════════ INTRO GATES ════════ */
+    #gate {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: flex;
+      pointer-events: none
+    }
+
+    #gate .door {
+      flex: 1;
+      background:
+        linear-gradient(90deg, rgba(56, 189, 248, .08) 1px, transparent 1px) 0 0/64px 100%,
+        linear-gradient(180deg, #0f172a, #060b14);
+      transition: transform 1.4s cubic-bezier(.77, 0, .18, 1) .9s;
+      border-right: 1px solid var(--line);
+    }
+
+    #gate .door.right {
+      border-right: none;
+      border-left: 1px solid var(--line)
+    }
+
+    #gate.open .door.left {
+      transform: translateX(-101%)
+    }
+
+    #gate.open .door.right {
+      transform: translateX(101%)
+    }
+
+    #gate .gate-sigil {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(45deg);
+      width: 96px;
+      height: 96px;
+      border: 1px solid var(--gold-bright);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 0 60px rgba(56, 189, 248, .3), inset 0 0 30px rgba(56, 189, 248, .15);
+      animation: gatePulse 1.2s ease-in-out;
+      transition: opacity .5s ease .7s, transform .9s ease .7s;
+    }
+
+    #gate.open .gate-sigil {
+      opacity: 0;
+      transform: translate(-50%, -50%) rotate(45deg) scale(1.6)
+    }
+
+    #gate .gate-sigil img {
+      transform: rotate(-45deg);
+      width: 70%;
+      height: 70%;
+      object-fit: contain;
+    }
+
+    @keyframes gatePulse {
+      0% {
+        box-shadow: 0 0 10px rgba(56, 189, 248, .2)
+      }
+
+      60% {
+        box-shadow: 0 0 90px rgba(56, 189, 248, .6)
+      }
+
+      100% {
+        box-shadow: 0 0 60px rgba(56, 189, 248, .4)
+      }
+    }
+
+    /* ════════ SCROLL PROGRESS SWORD ════════ */
+    #progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      z-index: 200;
+      background: linear-gradient(90deg, var(--ice), var(--gold-bright), var(--ember-bright));
+      box-shadow: 0 0 14px rgba(125, 211, 252, .8);
+      transition: width .1s linear;
+    }
+
+    #progress::after {
+      content: "⚔";
+      position: absolute;
+      right: -10px;
+      top: -9px;
+      font-size: 14px;
+      filter: drop-shadow(0 0 8px var(--ice));
+    }
+
+    /* ════════ ORNAMENTS ════════ */
+    .rune-divider {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      justify-content: center;
+      color: var(--gold-bright);
+      margin: 0 auto 18px;
+      width: min(420px, 80%);
+    }
+
+    .rune-divider::before,
+    .rune-divider::after {
       content: "";
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      pointer-events: none;
-      background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, .13) 0 1px, transparent 1px 3px);
-      mix-blend-mode: multiply;
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-bright));
     }
 
-    /* subtle vignette */
-    body::after {
+    .rune-divider::after {
+      background: linear-gradient(90deg, var(--gold-bright), transparent)
+    }
+
+    .eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: .75rem;
+      letter-spacing: .45em;
+      text-transform: uppercase;
+      color: var(--gold-bright);
+      text-align: center;
+    }
+
+    h2.section-title {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      text-align: center;
+      letter-spacing: .06em;
+      margin: .35em 0 .2em;
+    }
+
+    .section-sub {
+      text-align: center;
+      color: var(--faded);
+      font-style: italic;
+      font-size: 1.15rem;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    section {
+      padding: 110px 24px;
+      position: relative
+    }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto
+    }
+
+    /* jagged banner-edge divider between sections */
+    .jagged {
+      display: block;
+      width: 100%;
+      height: 30px;
+      margin-top: -1px;
+    }
+
+    /* ════════ NAV ════════ */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 32px;
+      background: linear-gradient(180deg, rgba(6, 11, 20, .95), rgba(6, 11, 20, 0));
+      transition: background .4s, box-shadow .4s;
+    }
+
+    nav.scrolled {
+      background: rgba(6, 11, 20, .98);
+      box-shadow: 0 1px 0 var(--line);
+      backdrop-filter: blur(8px)
+    }
+
+    .sigil {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.5rem;
+      color: var(--gold-bright);
+      border: 1px solid var(--line);
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      transform: rotate(45deg);
+      transition: .4s;
+      text-decoration: none;
+    }
+
+    .sigil img {
+      transform: rotate(-45deg);
+      width: 75%;
+      height: 75%;
+      object-fit: contain;
+    }
+
+    .sigil:hover {
+      box-shadow: 0 0 24px rgba(56, 189, 248, .5);
+      border-color: var(--ice);
+      transform: rotate(45deg) scale(1.08)
+    }
+
+    nav ul {
+      display: flex;
+      gap: 30px;
+      list-style: none
+    }
+
+    nav a.navlink {
+      font-family: 'Cinzel', serif;
+      font-size: .8rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--parchment);
+      text-decoration: none;
+      position: relative;
+      padding-bottom: 4px;
+      transition: color .3s, text-shadow .3s;
+    }
+
+    nav a.navlink::after {
       content: "";
-      position: fixed;
-      inset: 0;
-      z-index: 9998;
-      pointer-events: none;
-      box-shadow: inset 0 0 220px rgba(0, 0, 0, .7);
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: var(--ice);
+      transition: width .35s ease;
     }
 
-    .pixel {
-      font-family: var(--pixel);
+    nav a.navlink:hover {
+      color: var(--ice);
+      text-shadow: 0 0 16px rgba(125, 211, 252, .7)
     }
 
-    /* ========== NEW: BOOT SCREEN ========== */
-    #boot {
-      position: fixed;
-      inset: 0;
-      z-index: 100000;
-      background: var(--bg);
+    nav a.navlink:hover::after {
+      width: 100%
+    }
+
+    @media(max-width:760px) {
+      nav ul {
+        display: none
+      }
+    }
+
+    /* ════════ HERO ════════ */
+    .hero {
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 26px;
-      transition: opacity .6s ease, visibility .6s;
-    }
-
-    #boot.done {
-      opacity: 0;
-      visibility: hidden;
-    }
-
-    #boot .boot-logo {
-      font-family: var(--pixel);
-      font-size: 16px;
-      color: var(--neon);
-      text-shadow: 0 0 14px rgba(95, 242, 200, .8);
-      animation: bootFlicker 1.4s steps(3) infinite;
-    }
-
-    @keyframes bootFlicker {
-
-      0%,
-      100% {
-        opacity: 1;
-      }
-
-      48% {
-        opacity: 1;
-      }
-
-      50% {
-        opacity: .55;
-      }
-
-      52% {
-        opacity: 1;
-      }
-    }
-
-    #boot .boot-bar {
-      width: min(320px, 70vw);
-      height: 18px;
-      border: 3px solid var(--panel-line);
-      background: #0c1126;
-      box-shadow: 0 0 0 3px var(--bg), 0 0 18px rgba(95, 242, 200, .25);
+      text-align: center;
+      position: relative;
+      padding: 120px 24px 80px;
       overflow: hidden;
+      background: url('north.jpg') center center / cover no-repeat;
     }
 
-    #boot .boot-bar span {
-      display: block;
+    #particles {
+      position: absolute;
+      inset: 0;
+      width: 100%;
       height: 100%;
-      width: 0;
-      background: repeating-linear-gradient(90deg, var(--neon) 0 8px, #3dd1a8 8px 12px);
-      animation: bootFill 1.3s steps(12, end) forwards;
-      box-shadow: 0 0 12px rgba(95, 242, 200, .7);
-    }
-
-    @keyframes bootFill {
-      to {
-        width: 100%;
-      }
-    }
-
-    #boot .boot-hint {
-      font-family: var(--pixel);
-      font-size: 8px;
-      color: var(--muted);
-      letter-spacing: 2px;
-      animation: blink 1.1s steps(2, start) infinite;
-    }
-
-    /* ========== NEW: XP SCROLL PROGRESS BAR ========== */
-    #xpbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 5px;
-      width: 0;
-      z-index: 10002;
-      background: linear-gradient(90deg, var(--neon), var(--gold), var(--pink));
-      box-shadow: 0 0 12px rgba(255, 211, 78, .8);
       pointer-events: none;
+      z-index: 1
     }
 
-    /* ========== NEW: FLOATING PIXEL PARTICLES ========== */
-    .pixie {
-      position: fixed;
-      width: 5px;
-      height: 5px;
-      z-index: 0;
-      pointer-events: none;
-      opacity: 0;
-      animation: floatUp linear infinite;
-    }
-
-    @keyframes floatUp {
-      0% {
-        transform: translateY(105vh) translateX(0);
-        opacity: 0;
-      }
-
-      8% {
-        opacity: .8;
-      }
-
-      90% {
-        opacity: .5;
-      }
-
-      100% {
-        transform: translateY(-8vh) translateX(36px);
-        opacity: 0;
-      }
-    }
-
-    /* ---------- NAV ---------- */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 10001;
-      background: rgba(10, 14, 26, .85);
-      backdrop-filter: blur(6px);
-      border-bottom: 3px solid var(--panel-line);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 22px;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    nav .logo {
-      font-family: var(--pixel);
-      font-size: 13px;
-      color: var(--neon);
-      text-shadow: 0 0 8px rgba(95, 242, 200, .7);
-      letter-spacing: 1px;
-      cursor: pointer;
-      animation: logoGlow 3s ease-in-out infinite;
-    }
-
-    @keyframes logoGlow {
-
-      0%,
-      100% {
-        text-shadow: 0 0 8px rgba(95, 242, 200, .7);
-      }
-
-      50% {
-        text-shadow: 0 0 16px rgba(95, 242, 200, 1), 0 0 30px rgba(95, 242, 200, .5);
-      }
-    }
-
-    nav .links {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    nav a {
-      font-family: var(--pixel);
-      font-size: 9px;
-      text-decoration: none;
-      color: var(--muted);
-      padding: 8px 10px;
-      border: 2px solid transparent;
-      transition: all .15s;
-      position: relative;
-    }
-
-    nav a:hover,
-    nav a.active {
-      color: var(--bg);
-      background: var(--neon);
-      border-color: var(--neon);
-      box-shadow: 0 0 14px rgba(95, 242, 200, .6);
-    }
-
-    /* ---------- LAYOUT ---------- */
-    .wrap {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 0 22px;
-      position: relative;
-      z-index: 1;
-    }
-
-    section {
-      padding: 70px 0;
-      border-bottom: 2px dashed rgba(42, 53, 102, .6);
-    }
-
-    .section-title {
-      font-family: var(--pixel);
-      font-size: 18px;
-      color: var(--neon);
-      text-shadow: 3px 3px 0 #000, 0 0 16px rgba(95, 242, 200, .4);
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .section-title::before {
-      content: "▶";
-      color: var(--pink);
-      font-size: 14px;
-      animation: arrowPulse 1.4s ease-in-out infinite;
-    }
-
-    @keyframes arrowPulse {
-
-      0%,
-      100% {
-        transform: translateX(0);
-        opacity: 1;
-      }
-
-      50% {
-        transform: translateX(5px);
-        opacity: .65;
-      }
-    }
-
-    .section-sub {
-      color: var(--muted);
-      font-size: 20px;
-      margin-bottom: 34px;
-      letter-spacing: 1px;
-    }
-
-    /* pixel-style border panel */
-    .panel {
-      background: linear-gradient(160deg, var(--panel), var(--bg2));
-      border: 2px solid var(--panel-line);
-      box-shadow: 0 0 0 4px var(--bg), 6px 6px 0 rgba(0, 0, 0, .5);
-      padding: 24px;
-      position: relative;
-    }
-
-    .panel::after {
+    .hero::before {
       content: "";
       position: absolute;
-      top: 6px;
-      right: 6px;
-      width: 8px;
-      height: 8px;
-      background: var(--neon);
-      box-shadow: 0 0 8px var(--neon);
-      animation: ledBlink 2.2s steps(2, start) infinite;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 12% 88%, rgba(2, 132, 199, .4), transparent 60%),
+        radial-gradient(ellipse 60% 50% at 88% 12%, rgba(56, 189, 248, .3), transparent 60%),
+        rgba(6, 11, 20, 0.65);
+      /* Dark overlay to make text readable */
+      pointer-events: none;
     }
 
-    @keyframes ledBlink {
-      50% {
-        opacity: .25;
+    .fog {
+      position: absolute;
+      left: -50%;
+      width: 200%;
+      height: 46%;
+      bottom: -6%;
+      background: radial-gradient(ellipse 30% 70% at 30% 60%, rgba(226, 232, 240, .08), transparent 70%),
+        radial-gradient(ellipse 26% 60% at 70% 50%, rgba(125, 211, 252, .08), transparent 70%);
+      animation: fogDrift 36s linear infinite;
+      pointer-events: none;
+    }
+
+    .fog.f2 {
+      bottom: auto;
+      top: -8%;
+      animation-duration: 52s;
+      animation-direction: reverse;
+      opacity: .7
+    }
+
+    @keyframes fogDrift {
+      from {
+        transform: translateX(-8%)
+      }
+
+      to {
+        transform: translateX(8%)
       }
     }
 
-    /* ---------- HERO ---------- */
-    .hero {
-      min-height: 78vh;
-      display: flex;
-      align-items: center;
-      padding: 50px 0;
-      border-bottom: 2px dashed rgba(42, 53, 102, .6);
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 160px 1fr;
-      gap: 34px;
-      align-items: center;
-      width: 100%;
-    }
-
-    .avatar {
-      width: 160px;
-      height: 160px;
-      background: var(--panel);
-      border: 4px solid var(--neon);
-      box-shadow: 0 0 0 4px var(--bg), 0 0 26px rgba(95, 242, 200, .45);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--pixel);
-      font-size: 42px;
-      color: var(--neon);
-      overflow: hidden;
+    .hero-content {
       position: relative;
-      animation: avatarFloat 4s ease-in-out infinite;
-      transition: transform .3s, box-shadow .3s;
+      z-index: 2;
+      max-width: 880px
     }
 
-    @keyframes avatarFloat {
+    .hero .eyebrow {
+      animation: fadeUp 1s 1.9s both
+    }
+
+    .hero h1 {
+      font-family: 'Cinzel', serif;
+      font-weight: 900;
+      font-size: clamp(2.8rem, 8vw, 6rem);
+      letter-spacing: .04em;
+      line-height: 1.08;
+      margin: 18px 0 10px;
+      background: linear-gradient(110deg, #ffffff 20%, var(--gold-bright) 40%, #e0f2fe 50%, var(--ice) 60%, var(--gold) 85%);
+      background-size: 220% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 4px 24px rgba(56, 189, 248, .4));
+      animation: fadeUp 1s 2.1s both, shimmer 6s ease-in-out 3.2s infinite;
+    }
+
+    @keyframes shimmer {
 
       0%,
       100% {
-        transform: translateY(0);
-        box-shadow: 0 0 0 4px var(--bg), 0 0 26px rgba(95, 242, 200, .45);
+        background-position: 0% 0
       }
 
       50% {
-        transform: translateY(-8px);
-        box-shadow: 0 0 0 4px var(--bg), 0 0 38px rgba(95, 242, 200, .7);
+        background-position: 100% 0
       }
     }
 
-    .avatar:hover {
-      transform: scale(1.06) rotate(-2deg);
-      animation-play-state: paused;
+    .hero .motto {
+      font-style: italic;
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      color: var(--faded);
+      min-height: 1.6em;
+      animation: fadeUp 1s 2.3s both;
     }
 
-    .avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      image-rendering: pixelated;
-      position: relative;
-      z-index: 10000;
-    }
-
-    .press-start {
-      font-family: var(--pixel);
-      font-size: 10px;
-      color: var(--gold);
-      margin-top: 12px;
-      animation: blink 1.1s steps(2, start) infinite;
+    .hero .motto .caret {
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      background: var(--ice);
+      vertical-align: -2px;
+      margin-left: 2px;
+      animation: blink 1s steps(1) infinite;
     }
 
     @keyframes blink {
       50% {
-        opacity: 0;
+        opacity: 0
       }
     }
 
-    .hero h1 {
-      font-family: var(--pixel);
-      font-size: 38px;
-      line-height: 1.25;
-      color: #fff;
-      text-shadow: 4px 4px 0 var(--pink), 8px 8px 0 rgba(0, 0, 0, .4);
-      margin-bottom: 14px;
-      position: relative;
-      animation: glitchIdle 6s infinite;
+    .hero .titles {
+      font-family: 'Cinzel', serif;
+      font-size: .85rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--parchment);
+      margin-top: 26px;
+      animation: fadeUp 1s 2.6s both;
     }
 
-    /* occasional RGB-split glitch */
-    @keyframes glitchIdle {
-
-      0%,
-      92%,
-      100% {
-        text-shadow: 4px 4px 0 var(--pink), 8px 8px 0 rgba(0, 0, 0, .4);
-        transform: none;
-      }
-
-      93% {
-        text-shadow: -3px 0 var(--blue), 3px 0 var(--pink), 8px 8px 0 rgba(0, 0, 0, .4);
-        transform: translateX(2px);
-      }
-
-      94.5% {
-        text-shadow: 3px 0 var(--neon), -3px 0 var(--pink), 8px 8px 0 rgba(0, 0, 0, .4);
-        transform: translateX(-2px) skewX(2deg);
-      }
-
-      96% {
-        text-shadow: 4px 4px 0 var(--pink), 8px 8px 0 rgba(0, 0, 0, .4);
-        transform: none;
-      }
-    }
-
-    .hero .tagline {
-      font-size: 26px;
-      color: var(--neon);
-      margin-bottom: 8px;
-      min-height: 1.3em;
-    }
-
-    /* typewriter cursor */
-    .tagline .cursor {
-      display: inline-block;
-      width: 12px;
-      height: 1.05em;
-      background: var(--neon);
-      vertical-align: text-bottom;
-      margin-left: 3px;
-      animation: blink .8s steps(2, start) infinite;
-      box-shadow: 0 0 8px var(--neon);
-    }
-
-    .hero .bio {
-      font-size: 22px;
-      color: var(--text);
-      max-width: 560px;
-      opacity: .9;
-    }
-
-    .badge-row {
+    .hero .cta-row {
       display: flex;
-      gap: 10px;
+      gap: 18px;
+      justify-content: center;
+      margin-top: 44px;
       flex-wrap: wrap;
-      margin-top: 18px;
-    }
-
-    .tag {
-      font-family: var(--pixel);
-      font-size: 8px;
-      padding: 7px 10px;
-      border: 2px solid var(--purple);
-      color: var(--purple);
-      background: rgba(155, 107, 255, .08);
-      transition: all .2s;
-    }
-
-    .tag:hover {
-      background: var(--purple);
-      color: var(--bg);
-      box-shadow: 0 0 14px rgba(155, 107, 255, .7);
-      transform: translateY(-3px);
-    }
-
-    /* ---------- STAT BARS ---------- */
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px 30px;
-      margin-top: 24px;
-      max-width: 560px;
-    }
-
-    .stat-label {
-      display: flex;
-      justify-content: space-between;
-      font-family: var(--pixel);
-      font-size: 9px;
-      margin-bottom: 5px;
-      color: var(--muted);
-    }
-
-    .bar {
-      height: 14px;
-      background: #0c1126;
-      border: 2px solid var(--panel-line);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .bar>span {
-      display: block;
-      height: 100%;
-      width: 0;
-      /* animated by JS to data-fill */
-      background: repeating-linear-gradient(90deg, var(--neon) 0 8px, #3dd1a8 8px 10px);
-      box-shadow: 0 0 10px rgba(95, 242, 200, .6);
-      transition: width 1.4s cubic-bezier(.22, 1, .36, 1);
-      position: relative;
-    }
-
-    /* moving shine across filled bar */
-    .bar>span::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -40%;
-      width: 40%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .45), transparent);
-      animation: barShine 2.6s linear infinite;
-    }
-
-    @keyframes barShine {
-      to {
-        left: 130%;
-      }
-    }
-
-    /* ---------- CARDS GRID ---------- */
-    .grid {
-      display: grid;
-      gap: 20px;
-    }
-
-    .grid.cols-2 {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    .grid.cols-3 {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    .card {
-      transition: transform .2s, box-shadow .2s;
-    }
-
-    .card:hover {
-      transform: translate(-3px, -5px);
-      box-shadow: 0 0 0 4px var(--bg), 10px 12px 0 rgba(0, 0, 0, .55), 0 0 28px rgba(95, 242, 200, .3);
-    }
-
-    .card h3 {
-      font-family: var(--pixel);
-      font-size: 12px;
-      color: #fff;
-      margin-bottom: 10px;
-      line-height: 1.4;
-      transition: color .2s, text-shadow .2s;
-    }
-
-    .card:hover h3 {
-      color: var(--neon);
-      text-shadow: 0 0 10px rgba(95, 242, 200, .6);
-    }
-
-    .card .lvl {
-      font-family: var(--pixel);
-      font-size: 8px;
-      color: var(--gold);
-      margin-bottom: 10px;
-    }
-
-    .card:hover .lvl {
-      animation: starTwinkle 1s steps(2) infinite;
-    }
-
-    @keyframes starTwinkle {
-      50% {
-        text-shadow: 0 0 10px var(--gold);
-      }
-    }
-
-    .card p {
-      font-size: 20px;
-      color: var(--text);
-      opacity: .85;
-      margin-bottom: 12px;
-    }
-
-    .chips {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .chip {
-      font-family: var(--pixel);
-      font-size: 7px;
-      padding: 5px 7px;
-      background: #0c1126;
-      border: 2px solid var(--blue);
-      color: var(--blue);
-      transition: all .15s;
-    }
-
-    .chip:hover {
-      background: var(--blue);
-      color: var(--bg);
-      box-shadow: 0 0 10px rgba(78, 168, 255, .7);
-      transform: translateY(-2px);
-    }
-
-    .card .btns {
-      margin-top: 14px;
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
+      animation: fadeUp 1s 2.8s both
     }
 
     .btn {
-      font-family: var(--pixel);
-      font-size: 8px;
+      font-family: 'Cinzel', serif;
+      font-size: .8rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      padding: 16px 36px;
       text-decoration: none;
-      padding: 9px 12px;
-      border: 2px solid var(--neon);
-      color: var(--neon);
-      background: transparent;
-      cursor: pointer;
-      transition: all .15s;
       position: relative;
+      transition: .35s;
       overflow: hidden;
     }
 
-    /* sweep shine on buttons */
-    .btn::before {
+    .btn-gold {
+      color: #ffffff;
+      background: linear-gradient(180deg, #38bdf8, #0284c7);
+      clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+    }
+
+    .btn-gold::after {
       content: "";
       position: absolute;
       top: 0;
-      left: -75%;
-      width: 50%;
+      left: -90%;
+      width: 55%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .35), transparent);
-      transform: skewX(-20deg);
-      transition: left .45s ease;
+      background: linear-gradient(105deg, transparent, rgba(255, 255, 255, .9), transparent);
+      transition: left .55s ease;
     }
 
-    .btn:hover::before {
-      left: 125%;
+    .btn-gold:hover::after {
+      left: 140%
     }
 
-    .btn:hover {
-      background: var(--neon);
-      color: var(--bg);
-      box-shadow: 0 0 14px rgba(95, 242, 200, .6);
-      transform: translateY(-2px);
+    .btn-gold:hover {
+      box-shadow: 0 0 24px rgba(2, 132, 199, .4);
+      transform: translateY(-2px)
     }
 
-    .btn:active {
-      transform: translateY(2px);
-      box-shadow: 0 0 6px rgba(95, 242, 200, .4);
+    .btn-ghost {
+      color: var(--parchment);
+      border: 1px solid var(--line)
     }
 
-    .btn.pink {
-      border-color: var(--pink);
-      color: var(--pink);
+    .btn-ghost:hover {
+      border-color: var(--ice);
+      color: var(--ice);
+      box-shadow: 0 0 20px rgba(56, 189, 248, .4);
+      transform: translateY(-2px)
     }
 
-    .btn.pink:hover {
-      background: var(--pink);
-      color: var(--bg);
-      box-shadow: 0 0 14px rgba(255, 79, 163, .6);
-    }
-
-    /* media thumb */
-    .thumb {
-      width: 100%;
-      aspect-ratio: 16/10;
-      background: repeating-linear-gradient(45deg, #141a33 0 12px, #182046 12px 24px);
-      border: 2px solid var(--panel-line);
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--pixel);
-      font-size: 9px;
-      color: var(--muted);
-      text-align: center;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      position: relative;
-      z-index: 1;
-      transition: transform .45s cubic-bezier(.22, 1, .36, 1), filter .45s;
-    }
-
-    .card:hover .thumb img {
-      transform: scale(1.07);
-      filter: saturate(1.2) brightness(1.05);
-    }
-
-    /* scanline sweep over thumbnail on hover */
-    .thumb::after {
-      content: "";
+    .scroll-hint {
       position: absolute;
-      inset: 0;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--faded);
+      font-family: 'Cinzel', serif;
+      font-size: .65rem;
+      letter-spacing: .4em;
+      text-transform: uppercase;
       z-index: 2;
-      background: linear-gradient(to bottom, transparent 0%, rgba(95, 242, 200, .22) 50%, transparent 100%);
-      transform: translateY(-100%);
-      transition: transform .6s ease;
-      pointer-events: none;
+      animation: bob 2.4s ease-in-out infinite;
     }
 
-    .card:hover .thumb::after {
-      transform: translateY(100%);
-    }
-
-    /* ---------- ACHIEVEMENT / TROPHY ---------- */
-    .trophy {
-      display: flex;
-      gap: 16px;
-      align-items: flex-start;
-    }
-
-    .trophy .icon {
-      font-size: 34px;
-      filter: drop-shadow(0 0 8px var(--gold));
-      transition: transform .2s;
-    }
-
-    .trophy:hover .icon {
-      animation: trophyBounce .55s cubic-bezier(.28, 2.2, .5, 1);
-    }
-
-    @keyframes trophyBounce {
-      0% {
-        transform: scale(1) rotate(0);
-      }
-
-      35% {
-        transform: scale(1.3) rotate(-10deg);
-      }
-
-      70% {
-        transform: scale(.95) rotate(6deg);
-      }
-
-      100% {
-        transform: scale(1) rotate(0);
-      }
-    }
-
-    .trophy h3 {
-      font-family: var(--pixel);
-      font-size: 11px;
-      color: var(--gold);
-      margin-bottom: 6px;
-    }
-
-    .trophy span {
-      font-family: var(--pixel);
-      font-size: 7px;
-      color: var(--muted);
-    }
-
-    /* ---------- TIMELINE (education) ---------- */
-    .timeline {
-      position: relative;
-      padding-left: 34px;
-    }
-
-    .timeline::before {
-      content: "";
-      position: absolute;
-      left: 9px;
-      top: 6px;
-      bottom: 6px;
-      width: 3px;
-      background: repeating-linear-gradient(to bottom, var(--neon) 0 6px, transparent 6px 12px);
-    }
-
-    .tl-item {
-      position: relative;
-      margin-bottom: 28px;
-      opacity: 0;
-      transform: translateX(-18px);
-      transition: opacity .6s ease, transform .6s ease;
-    }
-
-    .tl-item.in {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    .tl-item::before {
-      content: "◆";
-      position: absolute;
-      left: -31px;
-      top: 0;
-      color: var(--neon);
-      font-size: 16px;
-      text-shadow: 0 0 8px var(--neon);
-      animation: diamondPulse 2s ease-in-out infinite;
-    }
-
-    @keyframes diamondPulse {
+    @keyframes bob {
 
       0%,
       100% {
-        text-shadow: 0 0 8px var(--neon);
+        transform: translate(-50%, 0)
       }
 
       50% {
-        text-shadow: 0 0 16px var(--neon), 0 0 26px rgba(95, 242, 200, .6);
+        transform: translate(-50%, 8px)
       }
     }
 
-    .tl-item h3 {
-      font-family: var(--pixel);
-      font-size: 11px;
-      color: #fff;
-      margin-bottom: 6px;
-    }
-
-    .tl-item .when {
-      font-family: var(--pixel);
-      font-size: 8px;
-      color: var(--gold);
-      margin-bottom: 6px;
-    }
-
-    /* badges row (certs) */
-    .badge-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
-
-    .cert {
-      text-align: center;
-      transition: transform .2s;
-    }
-
-    .cert:hover {
-      transform: translateY(-5px);
-    }
-
-    .cert .seal {
-      width: 90px;
-      height: 90px;
-      margin: 0 auto 12px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 30%, #2a3566, #0c1126);
-      border: 3px solid var(--gold);
-      box-shadow: 0 0 18px rgba(255, 211, 78, .4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 30px;
-      transition: box-shadow .3s, transform .5s;
-    }
-
-    .cert:hover .seal {
-      transform: rotateY(360deg);
-      box-shadow: 0 0 30px rgba(255, 211, 78, .8), 0 0 50px rgba(255, 211, 78, .35);
-    }
-
-    .cert h3 {
-      font-family: var(--pixel);
-      font-size: 9px;
-      color: #fff;
-      margin-bottom: 5px;
-      line-height: 1.5;
-    }
-
-    .cert span {
-      font-family: var(--pixel);
-      font-size: 7px;
-      color: var(--muted);
-    }
-
-    /* ---------- CONTACT / FOOTER ---------- */
-    footer {
-      padding: 60px 0 80px;
-      text-align: center;
-    }
-
-    .social {
-      display: flex;
-      gap: 14px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin: 24px 0;
-    }
-
-    .social .btn {
-      animation: socialPulse 3s ease-in-out infinite;
-    }
-
-    .social .btn:nth-child(2) {
-      animation-delay: .4s;
-    }
-
-    .social .btn:nth-child(3) {
-      animation-delay: .8s;
-    }
-
-    .social .btn:nth-child(4) {
-      animation-delay: 1.2s;
-    }
-
-    @keyframes socialPulse {
-
-      0%,
-      100% {
-        box-shadow: 0 0 0 rgba(95, 242, 200, 0);
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(26px)
       }
 
-      50% {
-        box-shadow: 0 0 12px rgba(95, 242, 200, .35);
+      to {
+        opacity: 1;
+        transform: translateY(0)
       }
     }
 
-    .copyright {
-      font-family: var(--pixel);
-      font-size: 8px;
-      color: var(--muted);
-      margin-top: 20px;
-      line-height: 1.8;
-    }
-
-    /* ========== NEW: BACK TO TOP ARCADE BUTTON ========== */
-    #toTop {
-      position: fixed;
-      right: 22px;
-      bottom: 22px;
-      z-index: 10001;
-      width: 52px;
-      height: 52px;
-      font-family: var(--pixel);
-      font-size: 16px;
-      color: var(--bg);
-      background: var(--neon);
-      border: 3px solid #3dd1a8;
-      box-shadow: 0 5px 0 #2a8f74, 0 0 18px rgba(95, 242, 200, .5);
-      cursor: pointer;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(14px);
-      transition: all .3s;
-    }
-
-    #toTop.show {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
-
-    #toTop:active {
-      transform: translateY(4px);
-      box-shadow: 0 1px 0 #2a8f74, 0 0 10px rgba(95, 242, 200, .4);
-    }
-
-    /* ========== SCROLL REVEAL STATES ========== */
+    /* ════════ REVEAL ════════ */
     .reveal {
       opacity: 0;
-      transform: translateY(28px);
-      transition: opacity .65s ease, transform .65s cubic-bezier(.22, 1, .36, 1);
+      transform: translateY(36px);
+      transition: opacity .9s ease, transform .9s ease
     }
 
     .reveal.in {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0)
     }
 
-    /* staggered children */
-    .grid .card,
-    .badge-grid .cert {
-      opacity: 0;
-      transform: translateY(24px) scale(.97);
-      transition: opacity .55s ease, transform .55s cubic-bezier(.22, 1, .36, 1), box-shadow .2s;
-      transition-delay: var(--d, 0s);
+    .reveal.d1 {
+      transition-delay: .1s
     }
 
-    .grid .card.in,
-    .badge-grid .cert.in {
+    .reveal.d2 {
+      transition-delay: .22s
+    }
+
+    .reveal.d3 {
+      transition-delay: .34s
+    }
+
+    .reveal.d4 {
+      transition-delay: .46s
+    }
+
+    /* ════════ ABOUT ════════ */
+    #about {
+      background: linear-gradient(180deg, var(--night), var(--stone))
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 60px;
+      align-items: center;
+      margin-top: 60px
+    }
+
+    @media(max-width:820px) {
+      .about-grid {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .crest {
+      aspect-ratio: 1;
+      border: 1px solid var(--line);
+      position: relative;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(circle at 50% 42%, rgba(203, 213, 225, .1), transparent 70%);
+      overflow: hidden;
+    }
+
+    .crest::before,
+    .crest::after {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border: 1px solid rgba(203, 213, 225, .18)
+    }
+
+    .crest::after {
+      inset: 28px;
+      transform: rotate(45deg)
+    }
+
+    .crest .candle-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 60%, rgba(56, 189, 248, .14), transparent 60%);
+      animation: flicker 3.4s ease-in-out infinite;
+    }
+
+    .crest img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: relative;
+      z-index: 2;
+      opacity: 0.85;
+      transition: opacity 0.5s ease;
+    }
+
+    .crest:hover img {
       opacity: 1;
-      transform: translateY(0) scale(1);
     }
 
-    /* keep hover transform working after reveal */
-    .grid .card.in:hover {
-      transform: translate(-3px, -5px);
-      transition-delay: 0s;
+    .about-text p {
+      margin-bottom: 18px;
+      color: var(--parchment)
     }
 
-    /* ---------- REDUCED MOTION ---------- */
+    .about-text strong {
+      color: var(--ice);
+      font-weight: 600
+    }
+
+    .oath {
+      border-left: 3px solid var(--ice);
+      padding: 6px 0 6px 22px;
+      margin-top: 26px;
+      font-style: italic;
+      color: var(--faded);
+      position: relative;
+    }
+
+    .oath::before {
+      content: "❝";
+      position: absolute;
+      left: -13px;
+      top: -16px;
+      font-size: 1.8rem;
+      color: var(--ice);
+      background: var(--stone);
+      padding: 0 4px;
+    }
+
+    /* stat counters */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      margin-top: 70px;
+    }
+
+    .stat {
+      background: var(--stone);
+      padding: 34px 20px;
+      text-align: center;
+      transition: background .35s
+    }
+
+    .stat:hover {
+      background: var(--stone-2)
+    }
+
+    .stat .num {
+      font-family: 'Cinzel', serif;
+      font-weight: 900;
+      font-size: 2.8rem;
+      color: var(--ice);
+      text-shadow: 0 0 24px rgba(56, 189, 248, .4);
+    }
+
+    .stat .lbl {
+      font-family: 'Cinzel', serif;
+      font-size: .7rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--faded);
+      margin-top: 6px;
+    }
+
+    /* ════════ PROJECTS ════════ */
+    #projects {
+      background: var(--stone)
+    }
+
+    .banners {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      /* Slightly wider */
+      gap: 30px;
+      margin-top: 64px;
+      perspective: 1200px;
+    }
+
+    .banner {
+      background: linear-gradient(180deg, var(--stone-2), #0b111a);
+      border: 1px solid var(--line);
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 26px), 50% 100%, 0 calc(100% - 26px));
+      padding: 30px 30px 50px;
+      position: relative;
+      transition: box-shadow .45s ease, border-color .45s ease;
+      transform-style: preserve-3d;
+      will-change: transform;
+      display: flex;
+      /* Flex layout to align bottoms perfectly */
+      flex-direction: column;
+    }
+
+    .banner::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 8%;
+      right: 8%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--ice), transparent);
+      opacity: .65;
+      transition: opacity .4s;
+    }
+
+    .banner .glare {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .3s;
+      background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(226, 232, 240, .18), transparent 55%);
+      z-index: 20;
+    }
+
+    .banner:hover .glare {
+      opacity: 1
+    }
+
+    .banner:hover {
+      box-shadow: 0 28px 60px rgba(0, 0, 0, .7), 0 0 40px rgba(56, 189, 248, .2);
+      border-color: rgba(56, 189, 248, .6);
+    }
+
+    .banner:hover::before {
+      opacity: 1
+    }
+
+    .seal {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #7dd3fc, #0ea5e9 55%, #0369a1);
+      box-shadow: inset 0 2px 5px rgba(255, 255, 255, .3), inset 0 -3px 6px rgba(0, 0, 0, .5), 0 4px 10px rgba(0, 0, 0, .6);
+      display: grid;
+      place-items: center;
+      transform: rotate(-8deg);
+      transition: transform .4s;
+      z-index: 10;
+    }
+
+    .banner:hover .seal {
+      transform: rotate(8deg) scale(1.15)
+    }
+
+    .seal span {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1rem;
+      color: #ffffff;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, .8)
+    }
+
+    .banner-img {
+      width: calc(100% + 60px);
+      margin: -30px -30px 24px -30px;
+      height: 180px;
+      background: var(--night);
+      border-bottom: 1px solid var(--line);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .banner-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.85;
+      transition: transform 0.6s ease, opacity 0.6s ease;
+    }
+
+    .banner:hover .banner-img img {
+      transform: scale(1.08);
+      opacity: 1;
+    }
+
+    .banner h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.35rem;
+      letter-spacing: .06em;
+      color: var(--ice);
+      margin-bottom: 6px;
+    }
+
+    .banner .house-words {
+      font-style: italic;
+      color: var(--faded);
+      font-size: 1rem;
+      margin-bottom: 16px
+    }
+
+    .banner p.desc {
+      color: var(--parchment);
+      font-size: 1.05rem;
+      margin-bottom: 18px;
+      flex-grow: 1;
+      /* Aligns contents perfectly to the bottom */
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: auto;
+      /* Pushes to the bottom */
+      margin-bottom: 22px;
+    }
+
+    .tag {
+      font-family: 'Cinzel', serif;
+      font-size: .65rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      border: 1px solid var(--line);
+      padding: 6px 12px;
+      color: var(--faded);
+      transition: .3s;
+    }
+
+    .banner:hover .tag {
+      color: var(--parchment);
+      border-color: rgba(56, 189, 248, .5)
+    }
+
+    .link-wrap {
+      margin-top: 0;
+    }
+
+    .link-wrap a {
+      color: var(--ice);
+      text-decoration: none;
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      border-bottom: 1px solid var(--ice);
+      transition: color 0.3s, border-color 0.3s;
+    }
+
+    .link-wrap a:hover {
+      color: var(--parchment);
+      border-color: var(--parchment);
+    }
+
+    /* ════════ SKILLS ════════ */
+    #skills {
+      background: linear-gradient(180deg, var(--stone), var(--night))
+    }
+
+    .arsenal {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      /* Bigger Arsenal Cards */
+      gap: 30px;
+      /* Increased gap */
+      margin-top: 64px
+    }
+
+    .weapon {
+      border: 1px solid var(--line);
+      padding: 40px 32px;
+      /* Bigger padding */
+      background: rgba(255, 255, 255, .02);
+      transition: .4s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .weapon::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -80%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(105deg, transparent, rgba(226, 232, 240, .15), transparent);
+      transition: left .7s ease;
+    }
+
+    .weapon:hover::after {
+      left: 130%
+    }
+
+    .weapon:hover {
+      border-color: var(--ice);
+      transform: translateY(-5px);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, .5)
+    }
+
+    .weapon h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.05rem;
+      /* Bigger title */
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--ice);
+      margin-bottom: 24px;
+    }
+
+    /* ════════ CERT GRID ════════ */
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 40px 20px;
+      margin-top: 20px;
+    }
+
+    .cert-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .cert-icon-wrap {
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    .cert-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 2px solid var(--gold-bright);
+      background: var(--night);
+      display: grid;
+      place-items: center;
+      font-size: 2rem;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.4), inset 0 0 15px rgba(56, 189, 248, 0.2);
+    }
+
+    .cert-icon::before {
+      content: "";
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      opacity: 0.5;
+    }
+
+    .cert-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--parchment);
+      margin-bottom: 8px;
+    }
+
+    .cert-sub {
+      font-size: 0.75rem;
+      color: var(--faded);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .skill-row {
+      margin-bottom: 16px
+    }
+
+    .skill-row .skill-name {
+      display: flex;
+      justify-content: space-between;
+      color: var(--parchment);
+      font-size: 1.15rem;
+      /* Bigger text */
+      margin-bottom: 8px;
+    }
+
+    .skill-row .skill-name em {
+      color: var(--faded);
+      font-size: .95rem
+    }
+
+    .bar {
+      height: 8px;
+      /* Thicker bar */
+      background: rgba(255, 255, 255, .08);
+      position: relative;
+      overflow: hidden;
+      clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 100%, 0 100%);
+    }
+
+    .bar .fill {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--ember-bright), var(--ice), var(--gold-bright));
+      box-shadow: 0 0 12px rgba(56, 189, 248, .6);
+      transition: width 1.4s cubic-bezier(.25, .8, .3, 1) .2s;
+    }
+
+    .in .bar .fill {
+      width: var(--w)
+    }
+
+    /* ════════ JOURNEY ════════ */
+    #journey .timeline {
+      position: relative;
+      margin-top: 70px;
+      padding-left: 40px
+    }
+
+    #journey .timeline::before {
+      content: "";
+      position: absolute;
+      left: 9px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--ice), rgba(56, 189, 248, .1));
+    }
+
+    .moment {
+      position: relative;
+      padding: 0 0 55px 35px
+    }
+
+    .moment::before {
+      content: "";
+      position: absolute;
+      left: -38px;
+      top: 8px;
+      width: 18px;
+      height: 18px;
+      background: var(--night);
+      border: 2px solid var(--ice);
+      transform: rotate(45deg);
+      transition: .35s;
+    }
+
+    .moment:hover::before {
+      background: var(--ice);
+      box-shadow: 0 0 20px rgba(125, 211, 252, .8)
+    }
+
+    .moment .when {
+      font-family: 'Cinzel', serif;
+      font-size: .75rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--ember-bright);
+    }
+
+    .moment h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.3rem;
+      margin: 8px 0 8px;
+      letter-spacing: .04em
+    }
+
+    .moment p {
+      color: var(--faded);
+      max-width: 680px
+    }
+
+    /* ════════ CONTACT ════════ */
+    #contact {
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 100%, rgba(2, 132, 199, .15), transparent 65%),
+        var(--night);
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .raven {
+      display: inline-block;
+      margin-bottom: 20px;
+      animation: bob2 3.2s ease-in-out infinite
+    }
+
+    .raven img {
+      width: 90px;
+      height: auto;
+      filter: drop-shadow(0 0 14px rgba(56, 189, 248, 0.4));
+    }
+
+    @keyframes bob2 {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(-4deg)
+      }
+
+      50% {
+        transform: translateY(-10px) rotate(4deg)
+      }
+    }
+
+    .contact-links {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 48px
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 38px 24px;
+      text-align: center;
+      color: var(--faded);
+      font-size: 1.05rem;
+      font-style: italic;
+    }
+
+    footer .small {
+      font-family: 'Cinzel', serif;
+      font-style: normal;
+      font-size: .65rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      margin-top: 10px;
+      color: #64748b;
+    }
+
     @media (prefers-reduced-motion: reduce) {
-
-      *,
-      *::before,
-      *::after {
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: .01ms !important;
+      * {
+        animation: none !important;
+        transition: none !important
       }
 
-      #boot {
-        display: none;
+      .reveal {
+        opacity: 1;
+        transform: none
       }
 
-      .reveal,
-      .grid .card,
-      .badge-grid .cert,
-      .tl-item {
-        opacity: 1 !important;
-        transform: none !important;
-      }
-    }
-
-    /* ---------- RESPONSIVE ---------- */
-    @media(max-width:760px) {
-      body {
-        font-size: 20px;
+      #particles,
+      .fog {
+        display: none
       }
 
-      .hero-grid {
-        grid-template-columns: 1fr;
-        text-align: center;
-        justify-items: center;
+      #gate {
+        display: none
       }
 
-      .hero h1 {
-        font-size: 26px;
-      }
-
-      .grid.cols-2,
-      .grid.cols-3 {
-        grid-template-columns: 1fr;
-      }
-
-      .badge-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .stats {
-        grid-template-columns: 1fr;
-      }
-
-      .section-title {
-        font-size: 14px;
-      }
-
-      #toTop {
-        right: 14px;
-        bottom: 14px;
+      .in .bar .fill {
+        width: var(--w)
       }
     }
   </style>
@@ -1097,179 +1189,204 @@
 
 <body>
 
-  <!-- ===================== BOOT SCREEN ===================== -->
-  <div id="boot">
-    <div class="boot-logo">★ PORTFOLIO.EXE</div>
-    <div class="boot-bar"><span></span></div>
-    <div class="boot-hint">LOADING WORLD...</div>
+  <!-- intro gates -->
+  <div id="gate" aria-hidden="true">
+    <div class="door left"></div>
+    <div class="door right"></div>
+    <div class="gate-sigil"><img src="sigil.png" alt="Logo"></div>
   </div>
 
-  <!-- XP scroll progress bar -->
-  <div id="xpbar"></div>
+  <div id="progress" aria-hidden="true"></div>
 
-  <!-- ===================== NAV ===================== -->
-  <nav>
-    <div class="logo">★ Portfolio.exe</div>
-    <div class="links">
-      <a href="#profile">PROFILE</a>
-      <a href="#stats">SKILLS</a>
-      <a href="#languages">LANGUAGES</a>
-      <a href="#projects">QUESTS</a>
-      <a href="#decks">DECKS</a>
-      <a href="#org">GUILD</a>
-      <a href="#awards">TROPHIES</a>
-      <a href="#certs">BADGES</a>
-      <a href="#edu">CAMPAIGN</a>
-      <a href="#contact">CONNECT</a>
-    </div>
+  <nav id="nav">
+    <a href="#" class="sigil" aria-label="Home"><img src="sigil.png" alt="Logo"></a>
+    <ul>
+      <li><a class="navlink" href="#about">The North</a></li>
+      <li><a class="navlink" href="#projects">The Saga</a></li>
+      <li><a class="navlink" href="#skills">The Arsenal</a></li>
+      <li><a class="navlink" href="#journey">The Journey</a></li>
+      <li><a class="navlink" href="#contact">Send a Raven</a></li>
+    </ul>
   </nav>
 
-  <!-- ===================== HERO / PROFILE ===================== -->
-  <header class="hero" id="profile">
-    <div class="wrap">
-      <div class="hero-grid">
-        <div>
-          <div class="avatar">
-            <img src="me.jpg" alt="avatar">
-          </div>
-          <div class="press-start" style="text-align:center;">PRESS START</div>
-        </div>
-        <div>
-          <h1>HELLO,<br>I'M Joevin</h1>
-          <div class="tagline"><span id="typed"></span><span class="cursor"></span></div>
-          <p class="bio">
-            I'm a third-year Computer Science student who builds practical software — mobile apps, web tools, and
-            systems people can actually use. Aiming to grow into a developer who solves problems that count.
-          </p>
-          <div class="badge-row">
-            <span class="tag">CLASS: DEVELOPER</span>
-            <span class="tag">REGION: PH</span>
-            <span class="tag">STATUS: ONLINE</span>
-          </div>
-        </div>
+  <!-- ============ HERO ============ -->
+  <header class="hero">
+    <canvas id="particles"></canvas>
+    <div class="fog"></div>
+    <div class="fog f2"></div>
+
+    <div class="hero-content">
+      <p class="eyebrow">The North · Philippines</p>
+      <h1>Joevin Russel<br />of House Casibua</h1>
+      <p class="motto"><span id="typed"></span><span class="caret"></span></p>
+      <p class="titles">Third of His Year · BS Computer Science · Warden of the Code</p>
+      <div class="cta-row">
+        <a class="btn btn-gold" href="#projects">Behold the Saga</a>
+        <a class="btn btn-ghost" href="#contact">Send a Raven</a>
       </div>
     </div>
+    <span class="scroll-hint">Descend</span>
   </header>
 
-  <!-- ===================== STATS / SKILLS ===================== -->
-  <section id="stats">
+  <!-- ============ ABOUT ============ -->
+  <section id="about">
     <div class="wrap">
-      <h2 class="section-title">SKILL TREE</h2>
-      <p class="section-sub"></p>
-      <div class="panel">
-        <div class="stats">
-          <div>
-            <div class="stat-label"><span>FRONTEND</span><span>LV.8</span></div>
-            <div class="bar"><span data-fill="80%"></span></div>
-          </div>
-          <div>
-            <div class="stat-label"><span>BACKEND</span><span>LV.8</span></div>
-            <div class="bar"><span data-fill="80%"></span></div>
-          </div>
-          <div>
-            <div class="stat-label"><span>DATABASES</span><span>LV.5</span></div>
-            <div class="bar"><span data-fill="50%"></span></div>
-          </div>
-          <div>
-            <div class="stat-label"><span>UI / DESIGN</span><span>LV.7</span></div>
-            <div class="bar"><span data-fill="70%"></span></div>
-          </div>
-          <div>
-            <div class="stat-label"><span>LEADERSHIP</span><span>LV.8</span></div>
-            <div class="bar"><span data-fill="80%"></span></div>
-          </div>
-          <div>
-            <div class="stat-label"><span>PROBLEM SOLVING</span><span>LV.9</span></div>
-            <div class="bar"><span data-fill="90%"></span></div>
-          </div>
+      <p class="eyebrow reveal">Chapter I</p>
+      <h2 class="section-title reveal d1">The North</h2>
+      <div class="rune-divider reveal d2">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="#e0f2fe" />
+        </svg>
+      </div>
+      <div class="about-grid">
+        <div class="crest reveal d2">
+          <div class="candle-glow"></div>
+          <img src="me.jpg" alt="Joevin Casibua">
+        </div>
+        <div class="about-text reveal d3">
+          <p>From the realms of the <strong>Philippines</strong> rises a third-year <strong>BS Computer Science</strong>
+            student of <strong>Lyceum of the Philippines University – Cavite</strong>.</p>
+          <p>A builder of <strong>practical software</strong> — mobile apps, web tools, and systems people can actually
+            use. Aiming to grow into a developer who solves problems that count.</p>
+          <p>Loyal to clean code, complete deliverables, and shipping on time.</p>
+          <div class="oath">I am the shield that guards the codebase. I pledge my keyboard and my honor, for this sprint
+            and all the sprints to come.</div>
+        </div>
+      </div>
+
+      <div class="stats reveal d2">
+        <div class="stat">
+          <div class="num" data-count="6">0</div>
+          <div class="lbl">Quests Completed</div>
+        </div>
+        <div class="stat">
+          <div class="num" data-count="9">0</div>
+          <div class="lbl">Tongues Mastered</div>
+        </div>
+        <div class="stat">
+          <div class="num" data-count="6">0</div>
+          <div class="lbl">Badges Earned</div>
+        </div>
+        <div class="stat">
+          <div class="num" data-count="100" data-suffix="%">0</div>
+          <div class="lbl">Deadlines Met</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== PROGRAMMING LANGUAGES ===================== -->
-  <section id="languages">
-    <div class="wrap">
-      <h2 class="section-title">PROGRAMMING LANGUAGES</h2>
-      <p class="section-sub"></p>
-      <div class="panel">
-        <div class="badge-row" style="margin-top:0; justify-content:center; gap: 14px;">
-          <span class="tag" style="font-size: 10px; padding: 10px 14px;">PYTHON</span>
-          <span class="tag" style="font-size: 10px; padding: 10px 14px;">DART</span>
-          <span class="tag" style="font-size: 10px; padding: 10px 14px;">JAVA</span>
-          <span class="tag" style="font-size: 10px; padding: 10px 14px;">KOTLIN</span>
-          <span class="tag" style="font-size: 10px; padding: 10px 14px;">PHP</span>
-          <span class="tag" style="font-size: 10px; padding: 10px 14px;">SQL</span>
-          <span class="tag" style="font-size: 10px; padding: 10px 14px;">HTML</span>
-          <span class="tag" style="font-size: 10px; padding: 10px 14px;">GO</span>
-          <span class="tag" style="font-size: 10px; padding: 10px 14px;">RUST</span>
-        </div>
-      </div>
-    </div>
-  </section>
+  <svg class="jagged" viewBox="0 0 1200 30" preserveAspectRatio="none" aria-hidden="true">
+    <path
+      d="M0 0 L60 22 L130 6 L210 26 L290 10 L370 24 L450 8 L530 26 L610 12 L690 24 L770 6 L850 26 L930 10 L1010 24 L1090 8 L1200 22 L1200 30 L0 30 Z"
+      fill="#0f172a" />
+  </svg>
 
-  <!-- ===================== PROJECTS / QUESTS ===================== -->
-  <section id="projects">
+  <!-- ============ PROJECTS ============ -->
+  <section id="projects" style="margin-top:-30px">
     <div class="wrap">
-      <h2 class="section-title">QUESTS COMPLETED</h2>
-      <p class="section-sub"></p>
-      <div class="grid cols-2">
+      <p class="eyebrow reveal">Chapter II</p>
+      <h2 class="section-title reveal d1">The Saga of Projects</h2>
+      <p class="section-sub reveal d2">Every banner below was raised in battle — real systems, built and defended.</p>
 
-        <article class="panel card">
+      <div class="banners">
+        <article class="banner reveal d1">
+          <div class="glare"></div>
+          <div class="seal"><span>F</span></div>
+          <div class="banner-img"><img src="farm.png" alt="Farmer Aide" onerror="this.style.display='none'"></div>
           <h3>Farmer Aide</h3>
-          <div class="lvl">★ BOSS QUEST</div>
-          <div class="thumb"><img src="farm.png" alt="Farmer Aide cover"></div>
-          <p>Identify Plant Diseases with high accuracy using Machine Learning </p>
-          <div class="chips">
-            <span class="chip">TECH 1</span><span class="chip">TECH 2</span><span class="chip">TECH 3</span>
+          <p class="house-words">“The Harvest Shall Not Fall”</p>
+          <p class="desc">A Boss Quest — an app that identifies plant diseases with high accuracy using Machine
+            Learning,
+            counseling farmers with treatment advice.</p>
+          <div class="tags">
+            <span class="tag">Machine Learning</span><span class="tag">Mobile</span>
           </div>
-          <div class="btns">
-            <a class="btn" href="#">LIVE DEMO</a>
-            <a class="btn pink" href="https://github.com/sprintingbug/farmer-aide-se2" target="_blank">SOURCE</a>
-          </div>
-        </article>
-
-        <article class="panel card">
-          <h3>[ Aura Palette ]</h3>
-          <div class="lvl">★ SIDE QUEST</div>
-          <div class="thumb"><img src="aura.png" alt="Aura Palette cover"></div>
-          <p>Premium Chrome side-panel extension that transforms the way designers and developers work with color</p>
-          <div class="chips">
-            <span class="chip">TECH 1</span><span class="chip">TECH 2</span>
-          </div>
-          <div class="btns">
-            <a class="btn" href="#">LIVE DEMO</a>
-            <a class="btn pink" href="https://github.com/JoevinCasibua/Aura-Pallete" target="_blank">SOURCE</a>
+          <div class="link-wrap">
+            <a href="https://github.com/sprintingbug/farmer-aide-se2" target="_blank">VIEW SOURCE</a>
           </div>
         </article>
 
-        <article class="panel card">
+        <article class="banner reveal d2">
+          <div class="glare"></div>
+          <div class="seal"><span>A</span></div>
+          <div class="banner-img"><img src="aura.png" alt="Aura Palette" onerror="this.style.display='none'"></div>
+          <h3>Aura Palette</h3>
+          <p class="house-words">“Colors Woven True”</p>
+          <p class="desc">A Side Quest — a premium Chrome side-panel extension that transforms the way designers and
+            developers work with color.</p>
+          <div class="tags">
+            <span class="tag">Chrome Extension</span><span class="tag">Design</span>
+          </div>
+          <div class="link-wrap">
+            <a href="https://github.com/JoevinCasibua/Aura-Pallete" target="_blank">VIEW SOURCE</a>
+          </div>
+        </article>
+
+        <article class="banner reveal d3">
+          <div class="glare"></div>
+          <div class="seal"><span>I</span></div>
+          <div class="banner-img"><img src="pipeline.png" alt="Image Validation Pipeline"
+              onerror="this.style.display='none'"></div>
           <h3>Image Validation Pipeline</h3>
-          <div class="lvl">★ SIDE QUEST</div>
-          <div class="thumb"><img src="pipeline.png" alt="Image Validation Pipeline cover">
+          <p class="house-words">“Through the Clearing Lens”</p>
+          <p class="desc">A Python pipeline using OpenCV and NumPy to automate the cleaning of machine learning image
+            datasets.</p>
+          <div class="tags">
+            <span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">NumPy</span>
           </div>
-          <p>Python pipeline using OpenCV and NumPy to automate the cleaning of machine learning image datasets.</p>
-          <div class="chips">
-            <span class="chip">TECH 1</span><span class="chip">TECH 2</span>
-          </div>
-          <div class="btns">
-            <a class="btn" href="https://github.com/JoevinCasibua/image-validation-pipeline" target="_blank">SOURCE</a>
+          <div class="link-wrap">
+            <a href="https://github.com/JoevinCasibua/image-validation-pipeline" target="_blank">VIEW SOURCE</a>
           </div>
         </article>
 
-        <article class="panel card">
+        <article class="banner reveal d1">
+          <div class="glare"></div>
+          <div class="seal"><span>P</span></div>
+          <div class="banner-img"><img src="pii.png" alt="PII Anonymizer Pipeline" onerror="this.style.display='none'">
+          </div>
           <h3>PII Anonymizer Pipeline</h3>
-          <div class="lvl">★ SIDE QUEST</div>
-          <div class="thumb"><img src="pii.png" alt="PII Anonymizer Pipeline cover">
+          <p class="house-words">“Secrets Kept Safe”</p>
+          <p class="desc">A Python-based data security pipeline that automatically detects and masks Personally
+            Identifiable
+            Information using Regex and cryptographic hashing.</p>
+          <div class="tags">
+            <span class="tag">Python</span><span class="tag">Security</span><span class="tag">Regex</span>
           </div>
-          <p>Python-based data security pipeline that automatically detects and masks Personally Identifiable
-            Information (PII) using Regex and cryptographic hashing.</p>
-          <div class="chips">
-            <span class="chip">TECH 1</span><span class="chip">TECH 2</span>
+          <div class="link-wrap">
+            <a href="https://github.com/JoevinCasibua/The-Data-Security-Project-PII-Anonymizer-Pipeline"
+              target="_blank">VIEW SOURCE</a>
           </div>
-          <div class="btns">
-            <a class="btn" href="https://github.com/JoevinCasibua/The-Data-Security-Project-PII-Anonymizer-Pipeline"
-              target="_blank">SOURCE</a>
+        </article>
+
+        <article class="banner reveal d2">
+          <div class="glare"></div>
+          <div class="seal"><span>F</span></div>
+          <div class="banner-img"><img src="fd.png" alt="" onerror="this.style.display='none'"></div>
+          <h3>FoodSharePH</h3>
+          <p class="house-words">“To Share is to Survive”</p>
+          <p class="desc">A robust platform for food sharing, bringing communities together to distribute resources
+            effectively and compassionately.</p>
+          <div class="tags">
+            <span class="tag">Web</span><span class="tag">Platform</span><span class="tag">Community</span>
+          </div>
+          <div class="link-wrap">
+            <a href="https://github.com/JoevinCasibua/FoodSharePH" target="_blank">VIEW SOURCE</a>
+          </div>
+        </article>
+
+        <article class="banner reveal d3">
+          <div class="glare"></div>
+          <div class="seal"><span>S</span></div>
+          <div class="banner-img"><img src="schl.png" alt="" onerror="this.style.display='none'"></div>
+          <h3>School Inventory System</h3>
+          <p class="house-words">“The North Remembers Every Asset”</p>
+          <p class="desc">A solid keep for school property — a web-based inventory ledger that tracks every item, built
+            clean and efficient.</p>
+          <div class="tags">
+            <span class="tag">Web</span><span class="tag">Ledger</span><span class="tag">Inventory</span>
+          </div>
+          <div class="link-wrap">
+            <a href="https://github.com/JoevinCasibua/School-Inventory-System" target="_blank">VIEW SOURCE</a>
           </div>
         </article>
 
@@ -1277,350 +1394,378 @@
     </div>
   </section>
 
-  <!-- ===================== POWERPOINTS / DECKS ===================== -->
-  <section id="decks">
+  <!-- ============ SKILLS ============ -->
+  <section id="skills">
     <div class="wrap">
-      <h2 class="section-title">PRESENTATION ARCHIVE</h2>
-      <p class="section-sub"></p>
-      <div class="grid cols-3">
-
-        <article class="panel card">
-          <div class="thumb"><img src="ppt1.png" alt="deck-cover">
+      <p class="eyebrow reveal">Chapter III</p>
+      <h2 class="section-title reveal d1">The Arsenal</h2>
+      <p class="section-sub reveal d2">Weapons sharpened across many campaigns.</p>
+      <div class="arsenal">
+        <div class="weapon reveal d1">
+          <h4>⚔ Ancient &amp; Modern Tongues</h4>
+          <div class="skill-row">
+            <div class="skill-name">Python <em>Valyrian steel</em></div>
+            <div class="bar">
+              <div class="fill" style="--w:90%"></div>
+            </div>
           </div>
-          <h3 style="font-size:10px;">FarmerAide</h3>
-          <p>CSCN13C / A Digital Aid for Rice Disease Diagnosis and Advisory System</p>
-          <div class="btns"><a class="btn"
-              href="https://drive.google.com/file/d/1yxQ4AZlBl_yvKqoFzt1KpgyTHbz8kv7d/view?usp=drive_link"
-              target="_blank">VIEW DECK</a></div>
-        </article>
-
-        <article class="panel card">
-          <div class="thumb"><img src="np.png" alt="deck-cover">
+          <div class="skill-row">
+            <div class="skill-name">Java / Kotlin <em>castle-forged</em></div>
+            <div class="bar">
+              <div class="fill" style="--w:85%"></div>
+            </div>
           </div>
-          <h3 style="font-size:10px;">Network Layout Proposal</h3>
-          <p>CSCN15C / Design & simulation of a structured network for a small-to-medium enterprise</p>
-          <div class="btns"><a class="btn"
-              href="https://drive.google.com/file/d/1RvtnVgVdzDGgt5Dn-pSOn1X8ec9q6E3D/view?usp=drive_link"
-              target="_blank">VIEW DECK</a></div>
-        </article>
-
-        <article class="panel card">
-          <div class="thumb"><img src="nr.png" alt="deck-cover">
+          <div class="skill-row">
+            <div class="skill-name">HTML / CSS / JS <em>Valyrian steel</em></div>
+            <div class="bar">
+              <div class="fill" style="--w:90%"></div>
+            </div>
           </div>
-          <h3 style="font-size:10px;">Bridging Neuroscience and Deep Learning</h3>
-          <p>CSELC03C / From Neurons to
-            Networks: Biology
-            Meets Artificial
-            Intelligence</p>
-          <div class="btns"><a class="btn"
-              href="https://drive.google.com/file/d/19cOpSW2kS9lzkn2spOx2QrFKENcRVfJP/view?usp=drive_link"
-              target="_blank">VIEW DECK</a></div>
-        </article>
+          <div class="skill-row">
+            <div class="skill-name">SQL / PHP <em>tempered</em></div>
+            <div class="bar">
+              <div class="fill" style="--w:80%"></div>
+            </div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-name">Go / Rust <em>newly forged</em></div>
+            <div class="bar">
+              <div class="fill" style="--w:60%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="weapon reveal d2">
+          <h4>🛡 Masteries</h4>
+          <div class="skill-row">
+            <div class="skill-name">Frontend Systems</div>
+            <div class="bar">
+              <div class="fill" style="--w:80%"></div>
+            </div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-name">Backend Systems</div>
+            <div class="bar">
+              <div class="fill" style="--w:80%"></div>
+            </div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-name">UI / UX Design</div>
+            <div class="bar">
+              <div class="fill" style="--w:70%"></div>
+            </div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-name">Problem Solving</div>
+            <div class="bar">
+              <div class="fill" style="--w:90%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="weapon reveal d3">
+          <h4>🔥 Honours &amp; Trophies</h4>
+          <div class="skill-row">
+            <div class="skill-name">3rd Best Paper & Presentation- FarmerAide</div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-name">AI Hackathon - 5th Place</div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-name">Base Ball 5 - 2nd Place</div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-name">SHS Silver &amp; Bronze Medals</div>
+          </div>
+        </div>
 
+        <!-- Presentations -->
+        <div class="weapon reveal d3"
+          style="grid-column: 1 / -1; padding: 0; background: transparent; border: none; box-shadow: none;">
+          <h4 style="margin-bottom: 24px;">📽 Presentations</h4>
+          <div class="banners" style="margin-top: 0;">
+            <article class="banner reveal d1">
+              <div class="glare"></div>
+              <div class="seal"><span>P</span></div>
+              <div class="banner-img"><img src="ppt1.png" alt="Farmer Aide Presentation"
+                  onerror="this.style.display='none'"></div>
+              <h3>Farmer Aide Presentation</h3>
+              <p class="house-words">“Defending the Harvest”</p>
+              <p class="desc">The complete slide deck presented for the Farmer Aide project, detailing the machine
+                learning architecture, dataset validation, and its real-world impact.</p>
+              <div class="tags">
+                <span class="tag">Slides</span><span class="tag">Defense</span><span class="tag">Showcase</span>
+              </div>
+              <div class="link-wrap">
+                <a href="https://drive.google.com/file/d/1yxQ4AZlBl_yvKqoFzt1KpgyTHbz8kv7d/view?usp=drive_link"
+                  target="_blank">VIEW PRESENTATION</a>
+              </div>
+            </article>
+
+            <article class="banner reveal d2">
+              <div class="glare"></div>
+              <div class="seal"><span>N</span></div>
+              <div class="banner-img"><img src="nr.png" alt="NR Presentation" onerror="this.style.display='none'"></div>
+              <h3>NR Presentation</h3>
+              <p class="house-words">“Knowledge Shared”</p>
+              <p class="desc">A detailed presentation covering key concepts and project insights, beautifully crafted to
+                convey complex information simply.</p>
+              <div class="tags">
+                <span class="tag">Slides</span><span class="tag">Insights</span>
+              </div>
+              <div class="link-wrap">
+                <a href="https://drive.google.com/file/d/19cOpSW2kS9lzkn2spOx2QrFKENcRVfJP/view?usp=drive_link"
+                  target="_blank">VIEW PRESENTATION</a>
+              </div>
+            </article>
+
+            <article class="banner reveal d3">
+              <div class="glare"></div>
+              <div class="seal"><span>N</span></div>
+              <div class="banner-img"><img src="np.png" alt="NP Presentation" onerror="this.style.display='none'"></div>
+              <h3>NP Presentation</h3>
+              <p class="house-words">“Visions and Blueprints”</p>
+              <p class="desc">Comprehensive slide deck showcasing technical blueprints, project milestones, and
+                development strategy overviews.</p>
+              <div class="tags">
+                <span class="tag">Slides</span><span class="tag">Strategy</span>
+              </div>
+              <div class="link-wrap">
+                <a href="https://drive.google.com/file/d/1RvtnVgVdzDGgt5Dn-pSOn1X8ec9q6E3D/view?usp=drive_link"
+                  target="_blank">VIEW PRESENTATION</a>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Certifications Landscape Grid -->
+        <div class="weapon reveal d4" style="grid-column: 1 / -1;">
+          <h4 style="text-align: center; margin-bottom: 24px; font-size: 1.3rem;">▶ BADGES EARNED (CERTIFICATIONS)</h4>
+          <div class="cert-grid">
+            <div class="cert-item">
+              <div class="cert-icon-wrap">
+                <div class="cert-icon">📜</div>
+              </div>
+              <div class="cert-title">Python Essentials 1</div>
+              <div class="cert-sub">Cisco Networking Academy • 2024</div>
+            </div>
+            <div class="cert-item">
+              <div class="cert-icon-wrap">
+                <div class="cert-icon">📜</div>
+              </div>
+              <div class="cert-title">Python Essentials 2</div>
+              <div class="cert-sub">Cisco Networking Academy • 2024</div>
+            </div>
+            <div class="cert-item">
+              <div class="cert-icon-wrap">
+                <div class="cert-icon">📜</div>
+              </div>
+              <div class="cert-title">Intro to Modern AI</div>
+              <div class="cert-sub">Cisco Networking Academy • 2026</div>
+            </div>
+            <div class="cert-item">
+              <div class="cert-icon-wrap">
+                <div class="cert-icon">📜</div>
+              </div>
+              <div class="cert-title">Networking Basics</div>
+              <div class="cert-sub">Cisco Networking Academy • 2026</div>
+            </div>
+            <div class="cert-item">
+              <div class="cert-icon-wrap">
+                <div class="cert-icon">📜</div>
+              </div>
+              <div class="cert-title">Amazon Web Services: Basics</div>
+              <div class="cert-sub">Alison • 2026</div>
+            </div>
+            <div class="cert-item">
+              <div class="cert-icon-wrap">
+                <div class="cert-icon">📜</div>
+              </div>
+              <div class="cert-title">Computer Networking - Digital<br />Network Security</div>
+              <div class="cert-sub">Alison • 2026</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== ORG EXPERIENCE / GUILD ===================== -->
-  <section id="org">
+  <!-- ============ JOURNEY ============ -->
+  <section id="journey">
     <div class="wrap">
-      <h2 class="section-title">GUILD ROSTER (ORG EXPERIENCE)</h2>
-      <p class="section-sub"></p>
-      <div class="grid cols-2">
-
-        <article class="panel card">
-          <h3>HUMSS Student Government</h3>
-          <div class="lvl">ROLE: Vice-President • 2021–2023 </div>
-          <p>As the Vice-President of the HUMSS Grade 11-12 Student Government, I played a pivotal role in shaping our
-            academic and extracurricular landscape.</p>
-        </article>
-
-        <article class="panel card">
-          <h3>NSTP Outreach Program</h3>
-          <div class="lvl">ROLE: Photographer / Documentarist • 2023–2024 </div>
-          <p>Documented and covered NSTP outreach events and activities</p>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== AWARDS / TROPHIES ===================== -->
-  <section id="awards">
-    <div class="wrap">
-      <h2 class="section-title">TROPHY ROOM (AWARDS)</h2>
-      <p class="section-sub"></p>
-      <div class="grid cols-2">
-
-        <div class="panel card trophy">
-          <div class="icon">🏆</div>
-          <div>
-            <h3>3rd Place, Best Paper & Presentation - FarmerAide</h3>
-            <span>College of Information Technology and Computer Studies • 2025</span>
-          </div>
+      <p class="eyebrow reveal">Chapter IV</p>
+      <h2 class="section-title reveal d1">The Campaign Log</h2>
+      <div class="timeline">
+        <div class="moment reveal d1">
+          <span class="when">2023 – Present</span>
+          <h4>Bachelor's Degree / Computer Science</h4>
+          <p>Training in the halls of Lyceum of the Philippines University - Cavite. Focusing on Software Development,
+            wielding practical tools to forge meaningful solutions.</p>
         </div>
-
-        <div class="panel card trophy">
-          <div class="icon">🥇</div>
-          <div>
-            <h3>AI HACKATHON - 5th Place</h3>
-            <span>College of Information Technology and Computer Studies • 2026</span>
-          </div>
+        <div class="moment reveal d2">
+          <span class="when">2021 – 2023</span>
+          <h4>Senior High</h4>
+          <p>Philippine Christian University - Dasmariñas. Honored with Silver and Bronze medals, while leading the
+            HUMSS
+            Student Government as Vice-President.</p>
         </div>
-
-        <div class="panel card trophy">
-          <div class="icon">🎖️</div>
-          <div>
-            <h3>Base Ball 5 - 2nd Place</h3>
-            <span>SEA Games|LPU - C• 2026</span>
-          </div>
-        </div>
-
-        <div class="panel card trophy">
-          <div class="icon">⭐</div>
-          <div>
-            <h3>2x Bronze 1x Silver Medalist
-              <br>Grade 11 - 12
-            </h3>
-            <span>Philippine Christian University • 2021-2023</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== CERTIFICATIONS / BADGES ===================== -->
-  <section id="certs">
-    <div class="wrap">
-      <h2 class="section-title">BADGES EARNED (CERTIFICATIONS)</h2>
-      <p class="section-sub"></p>
-      <div class="panel">
-        <div class="badge-grid">
-          <div class="cert">
-            <div class="seal">📜</div>
-            <h3>Python Essentials 1</h3>
-            <span>Cisco Networking Academy • 2024</span>
-          </div>
-          <div class="cert">
-            <div class="seal">📜</div>
-            <h3>Python Essentials 2</h3>
-            <span>Cisco Networking Academy • 2024</span>
-          </div>
-          <div class="cert">
-            <div class="seal">📜</div>
-            <h3>Intro to Modern AI</h3>
-            <span>Cisco Networking Academy • 2026</span>
-          </div>
-          <div class="cert">
-            <div class="seal">📜</div>
-            <h3>Networking Basics</h3>
-            <span>Cisco Networking Academy • 2026</span>
-          </div>
-          <div class="cert">
-            <div class="seal">📜</div>
-            <h3>Amazon Web Services:Basics</h3>
-            <span>Alison • 2026</span>
-          </div>
-          <div class="cert">
-            <div class="seal">📜</div>
-            <h3>Computer Networking - Digital Network Security</h3>
-            <span>Alison • 2026</span>
-          </div>
+        <div class="moment reveal d3">
+          <span class="when">2017 – 2020</span>
+          <h4>Junior High / Secondary</h4>
+          <p>Mindanao Institute. The early beginnings of the journey.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== EDUCATION / CAMPAIGN ===================== -->
-  <section id="edu">
+  <!-- ============ CONTACT ============ -->
+  <section id="contact">
     <div class="wrap">
-      <h2 class="section-title">CAMPAIGN LOG (EDUCATION)</h2>
-      <p class="section-sub"></p>
-      <div class="panel">
-        <div class="timeline">
-          <div class="tl-item">
-            <h3>[ Bachelor's Degree / Computer Science ]</h3>
-            <div class="when">Lyceum of the Philippines University - Cavite • [ 2023–PRESENT ]</div>
-            <p>Focusing on Software Development, GPA's 2.25</p>
-          </div>
-          <div class="tl-item">
-            <h3>[ Senior High / Strand ]</h3>
-            <div class="when">Philippine Christian University - Dasmariñas • [ 2021–2023 ]</div>
-            <p>Silver Medal(Grade 11), 2x Bronze Medal(Grade 12)</p>
-          </div>
-          <div class="tl-item">
-            <h3>[ Junior High / Secondary ]</h3>
-            <div class="when">Mindanao Institute • [ 2017-2020 ]</div>
-            <p>Chill Guy</p>
-          </div>
-        </div>
+      <span class="raven reveal"><img src="sigil.png" alt="Stark Logo"></span>
+      <p class="eyebrow reveal d1">Final Chapter</p>
+      <h2 class="section-title reveal d2">Send a Raven</h2>
+      <p class="section-sub reveal d3">For collaborations, quests, or internship summons — the rookery is always open.
+      </p>
+      <div class="cta-row contact-links reveal d4">
+        <a class="btn btn-gold" href="mailto:jayjaycasibua555@gmail.com"> By Raven (Email)</a>
+        <a class="btn btn-ghost" href="https://github.com/JoevinCasibua" target="_blank" rel="noopener"> GitHub
+          Keep</a>
+        <a class="btn btn-ghost" href="https://linkedin.com/in/joevinrusselcasibua" target="_blank" rel="noopener">
+          LinkedIn Court</a>
+        <a class="btn btn-ghost" href="https://www.facebook.com/joevin.russel.casibua.2024" target="_blank"
+          rel="noopener">Facebook Realm</a>
       </div>
     </div>
   </section>
 
-  <!-- ===================== CONTACT / FOOTER ===================== -->
-  <footer id="contact">
-    <div class="wrap">
-      <h2 class="section-title" style="justify-content:center;">CONNECT &amp; CONTINUE?</h2>
-      <p class="section-sub">// insert YES — let's talk</p>
-      <div class="social">
-        <a class="btn" href="mailto:jayjaycasibua555@gmail.com">EMAIL</a>
-        <a class="btn pink" href="https://github.com/JoevinCasibua" target="_blank">GITHUB</a>
-        <a class="btn" href="https://www.linkedin.com/in/joevinrusselcasibua" target="_blank">LINKEDIN</a>
-        <a class="btn pink" href="https://www.facebook.com/joevin.russel.casibua.2024" target="_blank">FACEBOOK</a>
-      </div>
-      <div class="copyright">
-        © 2026 Joevin — BUILT WITH LOVE!<br>
-        HOSTED BY GITHUB
-      </div>
-    </div>
+  <footer>
+    Forged in the harsh winters · © 2026 Joevin
+    <div class="small">All code sworn · All bugs slain</div>
   </footer>
 
-  <!-- back-to-top arcade button -->
-  <button id="toTop" title="Back to top" aria-label="Back to top">▲</button>
-
   <script>
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    /* ---------- 1. BOOT SCREEN ---------- */
-    const boot = document.getElementById('boot');
-    if (reduceMotion) {
-      boot.remove();
-    } else {
-      setTimeout(() => boot.classList.add('done'), 1500);
-      setTimeout(() => boot.remove(), 2200);
+    /* ---------- intro gates ---------- */
+    const gate = document.getElementById('gate');
+    if (reduced) { gate.remove(); }
+    else {
+      requestAnimationFrame(() => setTimeout(() => gate.classList.add('open'), 100));
+      setTimeout(() => gate.remove(), 3000);
     }
 
-    /* ---------- 2. XP SCROLL PROGRESS BAR ---------- */
-    const xp = document.getElementById('xpbar');
-    const onScrollXP = () => {
+    /* ---------- scroll progress ---------- */
+    const prog = document.getElementById('progress');
+    addEventListener('scroll', () => {
       const h = document.documentElement;
-      const max = h.scrollHeight - h.clientHeight;
-      xp.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
-    };
-    window.addEventListener('scroll', onScrollXP, { passive: true });
-    onScrollXP();
+      const pct = h.scrollTop / (h.scrollHeight - h.clientHeight) * 100;
+      prog.style.width = pct + '%';
+      nav.classList.toggle('scrolled', scrollY > 40);
+    }, { passive: true });
 
-    /* ---------- 3. TYPEWRITER TAGLINE ---------- */
-    const phrases = [
-      '3rd Year Computer Science Student',
-      'Mobile & Web Developer',
-      'Machine Learning Enthusiast',
-      'Quest Log: Always Open'
-    ];
-    const typedEl = document.getElementById('typed');
-    if (reduceMotion) {
-      typedEl.textContent = phrases[0];
-    } else {
-      let pi = 0, ci = 0, deleting = false;
-      (function type() {
-        const word = phrases[pi];
-        typedEl.textContent = word.slice(0, ci);
-        let delay = deleting ? 32 : 62;
-        if (!deleting && ci === word.length) { delay = 1800; deleting = true; }
-        else if (deleting && ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; delay = 350; }
-        ci += deleting ? -1 : 1;
-        setTimeout(type, delay);
+    /* ---------- nav ---------- */
+    const nav = document.getElementById('nav');
+
+    /* ---------- typewriter motto ---------- */
+    const motto = '“Winter is coming — and the code must be ready.”';
+    const typed = document.getElementById('typed');
+    if (reduced) { typed.textContent = motto; }
+    else {
+      let i = 0;
+      setTimeout(function type() {
+        typed.textContent = motto.slice(0, ++i);
+        if (i < motto.length) setTimeout(type, 42);
+      }, 2600);
+    }
+
+    /* ---------- scroll reveal ---------- */
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: .12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    /* ---------- stat counters ---------- */
+    const statIO = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        statIO.unobserve(e.target);
+        const el = e.target, end = +el.dataset.count, suf = el.dataset.suffix || '';
+        if (reduced) { el.textContent = end + suf; return; }
+        const t0 = performance.now(), dur = 1600;
+        (function tick(t) {
+          const p = Math.min((t - t0) / dur, 1);
+          el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))) + suf;
+          if (p < 1) requestAnimationFrame(tick);
+        })(t0);
+      });
+    }, { threshold: .5 });
+    document.querySelectorAll('.stat .num').forEach(el => statIO.observe(el));
+
+    /* ---------- 3D tilt on banners ---------- */
+    if (!reduced && matchMedia('(hover:hover)').matches) {
+      document.querySelectorAll('.banner').forEach(card => {
+        card.addEventListener('mousemove', ev => {
+          const r = card.getBoundingClientRect();
+          const x = (ev.clientX - r.left) / r.width;
+          const y = (ev.clientY - r.top) / r.height;
+          card.style.transform =
+            `rotateY(${(x - .5) * 10}deg) rotateX(${(.5 - y) * 8}deg) translateY(-8px)`;
+          card.style.setProperty('--gx', x * 100 + '%');
+          card.style.setProperty('--gy', y * 100 + '%');
+        });
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = 'rotateY(0) rotateX(0) translateY(0)';
+          card.style.transition = 'transform .5s ease, box-shadow .45s ease, border-color .45s ease';
+          setTimeout(() => card.style.transition = 'box-shadow .45s ease, border-color .45s ease', 500);
+        });
+      });
+    }
+
+    /* ---------- dragon flights ---------- */
+    const dragon = document.getElementById('dragon');
+    function flyDragon() {
+      if (reduced) return;
+      dragon.classList.remove('fly');
+      void dragon.offsetWidth;            // restart animation
+      dragon.style.top = (10 + Math.random() * 22) + '%';
+      dragon.classList.add('fly');
+    }
+    if (!reduced) {
+      setTimeout(flyDragon, 4000);
+      setInterval(flyDragon, 19000);
+    }
+
+    /* ---------- snow particles (Stark Theme) ---------- */
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let W, H, parts = [];
+    function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
+    addEventListener('resize', resize); resize();
+
+    function spawn() {
+      return {
+        type: 'snow', x: Math.random() * W, y: -10,
+        r: Math.random() * 2.5 + 1, vy: Math.random() * .8 + .4, vx: (Math.random() - .5) * .8,
+        drift: Math.random() * Math.PI * 2, life: 1, decay: 0, hue: '200,225,255'
+      };
+    }
+    if (!reduced) {
+      const COUNT = Math.min(130, Math.floor(innerWidth / 10));
+      for (let i = 0; i < COUNT; i++) { const p = spawn(); p.y = Math.random() * H; parts.push(p); }
+      (function loop() {
+        ctx.clearRect(0, 0, W, H);
+        parts.forEach((p, i) => {
+          p.drift += .01; p.x += p.vx + Math.sin(p.drift) * .3; p.y += p.vy;
+          if (p.y > H + 10) parts[i] = spawn();
+          const a = .6;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${p.hue},${a})`;
+          ctx.shadowBlur = 0;
+          ctx.shadowColor = `rgba(${p.hue},.8)`;
+          ctx.fill(); ctx.shadowBlur = 0;
+        });
+        requestAnimationFrame(loop);
       })();
     }
-
-    /* ---------- 4. FLOATING PIXEL PARTICLES ---------- */
-    if (!reduceMotion) {
-      const colors = ['#5ff2c8', '#ff4fa3', '#ffd34e', '#9b6bff', '#4ea8ff'];
-      for (let i = 0; i < 18; i++) {
-        const p = document.createElement('div');
-        p.className = 'pixie';
-        p.style.left = Math.random() * 100 + 'vw';
-        p.style.background = colors[i % colors.length];
-        p.style.boxShadow = '0 0 6px ' + colors[i % colors.length];
-        p.style.animationDuration = (9 + Math.random() * 14) + 's';
-        p.style.animationDelay = (Math.random() * 12) + 's';
-        const s = 3 + Math.random() * 4;
-        p.style.width = s + 'px';
-        p.style.height = s + 'px';
-        document.body.appendChild(p);
-      }
-    }
-
-    /* ---------- 5. SCROLL REVEAL (sections + staggered cards) ---------- */
-    document.querySelectorAll('section, .hero, footer').forEach(s => s.classList.add('reveal'));
-
-    const revealObs = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (!e.isIntersecting) return;
-        e.target.classList.add('in');
-        // stagger any cards / certs inside
-        e.target.querySelectorAll('.card, .cert').forEach((el, i) => {
-          el.style.setProperty('--d', (i * 0.1) + 's');
-          el.classList.add('in');
-        });
-        // timeline items
-        e.target.querySelectorAll('.tl-item').forEach((el, i) => {
-          setTimeout(() => el.classList.add('in'), 180 * i);
-        });
-        revealObs.unobserve(e.target);
-      });
-    }, { threshold: 0.08 });
-
-    document.querySelectorAll('.reveal').forEach(s => revealObs.observe(s));
-
-    /* ---------- 6. ANIMATED STAT BARS ---------- */
-    const barObs = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (!e.isIntersecting) return;
-        e.target.querySelectorAll('.bar > span').forEach((sp, i) => {
-          setTimeout(() => { sp.style.width = sp.dataset.fill; }, 120 * i);
-        });
-        barObs.unobserve(e.target);
-      });
-    }, { threshold: 0.3 });
-    const statsPanel = document.querySelector('#stats .panel');
-    if (statsPanel) barObs.observe(statsPanel);
-
-    /* ---------- 7. ACTIVE NAV LINK ON SCROLL ---------- */
-    const navLinks = [...document.querySelectorAll('nav .links a')];
-    const sections = navLinks
-      .map(a => document.querySelector(a.getAttribute('href')))
-      .filter(Boolean);
-
-    const navObs = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (!e.isIntersecting) return;
-        navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
-      });
-    }, { rootMargin: '-40% 0px -55% 0px' });
-    sections.forEach(s => navObs.observe(s));
-
-    /* ---------- 8. BACK TO TOP ---------- */
-    const toTop = document.getElementById('toTop');
-    window.addEventListener('scroll', () => {
-      toTop.classList.toggle('show', window.scrollY > 600);
-    }, { passive: true });
-    toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' }));
-
-    /* ---------- 9. LOGO EASTER EGG: pixel confetti burst ---------- */
-    document.querySelector('nav .logo').addEventListener('click', () => {
-      if (reduceMotion) return;
-      const colors = ['#5ff2c8', '#ff4fa3', '#ffd34e', '#9b6bff', '#4ea8ff'];
-      for (let i = 0; i < 24; i++) {
-        const c = document.createElement('div');
-        const size = 4 + Math.random() * 6;
-        c.style.cssText = `position:fixed;z-index:100001;pointer-events:none;
-          width:${size}px;height:${size}px;left:50%;top:60px;
-          background:${colors[i % colors.length]};box-shadow:0 0 6px ${colors[i % colors.length]};`;
-        document.body.appendChild(c);
-        const ang = Math.random() * Math.PI;
-        const dist = 80 + Math.random() * 180;
-        const dx = Math.cos(ang) * dist * (Math.random() < .5 ? -1 : 1);
-        const dy = Math.sin(ang) * dist;
-        c.animate([
-          { transform: 'translate(0,0)', opacity: 1 },
-          { transform: `translate(${dx}px, ${dy}px) rotate(${Math.random() * 720}deg)`, opacity: 0 }
-        ], { duration: 800 + Math.random() * 500, easing: 'cubic-bezier(.2,.8,.3,1)' })
-          .onfinish = () => c.remove();
-      }
-    });
   </script>
 </body>
 
